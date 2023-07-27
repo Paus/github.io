@@ -5,7 +5,7 @@ Microsoft has been in the news a lot recently, and rightfully so. With various v
 If you are only interested in the vulnerability, please see the tl;dr at the end of this post.
 
 ## The Culprit
-
+The Azure Portal Desktop App was released by Microsoft in [2019](https://www.jorgebernhardt.com/how-to-install-the-azure-portal-app-for-windows/). The App mainly provided users with a way of accessing the portal without having to use a browser. The App could easily be downloaded directly from the web at [https://portal.azure.com/App/Download](https://portal.azure.com/App/Download) and allowed users "to securely connect (without the use of a browser) to the Azure Port from any kind of Management server, or from a Windows client which has restrictions to use any kind of browser." (https://wmatthyssen.com/2020/01/02/download-and-install-the-azure-portal-app-with-powershell/)
 
 ## The Issue
 
