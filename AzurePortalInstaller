@@ -1,2 +1,22 @@
-# The Struggles of Imposter Syndome or: How I Killed the Azure Portal Desktop App and Learned the Dangers of Timidity
-## Summary
+# The Dangers of Being Lawful Good or: How I Killed the Azure Portal Desktop App and Why Microsoft Never Said a Word
+## Intro
+Microsoft has been in the news a lot recently, and rightfully so. With various vulnerabilities popping up (some they knew and some they didn't), it's been a rough go for them. With all of that going on, I was reminded of a finding I made last year. At the time, they didn't do anything to address it. Imagine my surprise when after reviewing the last 12 months of Release Notes and Security Bulletins I didn't see any announcements for it either. At the time, I knew it was a serious issue but was told it wasn't and suddenly it disappeared and isn't available to download anymore. Because I was still new in the area, instead of publishing my finding like I am now, I reached out to multiple outlets for help. Either no one responded or said they would look into it and then never said anything again. When I mentioned my frustrations to someone, I was asked why I hadn't published anything on my own. They were understanding of my doubts, but encouraged me to do it anyway. I realized my imposter syndome and my apparent Lawful Good alignment had gotten in the way of me making this issue known. And here we are.
+
+If you are only interested in the vulnerability, please see the tl;dr at the end of this post.
+
+## The Culprit
+
+
+## The Issue
+
+
+## The Response
+
+
+## The Fix
+
+
+## The Lesson Learned
+
+
+tl;dr The AzurePortalInstaller.exe is vulnerable to DLL Hijacking. There is no fix for it and it must be removed from your computers manually and any download of the exe blocked.
