@@ -1,4 +1,4 @@
-# The Dangers of Being Lawful Good or: How I Killed the Azure Portal Desktop App and Why Microsoft Never Said a Word
+# The Dangers of Being Lawful Good or: How I Killed the Azure Portal Desktop App and No One Ever Told You
 ## The Intro
 Microsoft has been in the news a lot recently, and rightfully so. With various vulnerabilities popping up (some they knew and some they didn't), it's been a rough go for them. With all of that going on, I was reminded of a finding I made last year. At the time, they didn't do anything to address it. Imagine my surprise when after reviewing the last 12 months of Release Notes and Security Bulletins I didn't see any announcements for it either. At the time, I knew it was a serious issue but was told it wasn't and suddenly it disappeared and isn't available to download anymore. Because I was still new in the area, instead of publishing my finding like I am now, I reached out to multiple outlets for help. Either no one responded or said they would look into it and then never said anything again. When I mentioned my frustrations to someone, I was asked why I hadn't published anything on my own. They were understanding of my doubts, but encouraged me to do it anyway. I realized my imposter syndome and my apparent Lawful Good alignment had gotten in the way of me making this issue known. And here we are.
 
@@ -15,7 +15,7 @@ In August of 2022, I got COVID and was isolated from family and friends. However
 I began thinking about different desktop apps I use that might be vulnerable. Since I couldn't get to sleep, I pulled myself out of bed and sat down at my computer and began testing these different apps. I tested a lot of them with no luck before I was finally able to sleep. The next morning I returned to my computer and started testing again. It was then that I found the Azure Portal Desktop App (AzurePortalInstaller.exe) was vulnerable to DLL. More importantly, I knew there was no way to just push an update to everyone.
 
 ## The Vulnerability
-Because the app is by Microsoft and is "trusted" by default, the installation process can be started and completed without requiring Admin permissions. Downloads are more likely to be ignored unless, for example, a company uses AWS instead of Azure, and can be explained away. The attack also occurs prior to the installation occurring, meaning the app doesn't even have to be installed for it to work. This can make it more difficult for detection software to capture the occurrence of the attack. 
+Because the app is by Microsoft and is "trusted" by default, the installation process can be started and completed without requiring Admin permissions. Downloads of the file are more likely to be ignored unless, for example, a company uses AWS instead of Azure, and can be explained away. The attack occurs just before installation of the App is completed. It's worth mentioning that while testing showed the installation can be stopped, it was not easy to accomplish.
 
 Once access has been established, the attacker needs a way for the shell to reactivate in the event the computer is shutdown. This can be accomplished with the Task Scheduler. A "basic" task that activates when the victim logs in can be created without any elevated privileges. A malicious actor can create a basic task and have it activate the installer every time the user logs in. In my testing, the user never sees the event occur. Nothing pops up and there is no indication to the victim that something unusual has happened.
 
@@ -26,21 +26,23 @@ If the user is already an admin, the basic task can be upgraded to occur at boot
 ## The Submission
 On August 20th, 2022, I submitted my finding to Microsoft via the [Microsoft Security Response Center (MSRC)](https://www.microsoft.com/en-us/msrc), who assigned it VULN-072213 with case number 73945. My submission included most of what you read above along with the files required to execute this attack. These files included the dll file that allows the attack to occur and screenshots demonstrating the attack itself. (Please note I have opted not to include those with this post to avoid providing malicious actors with the information they need to execute this attack. Should Microsoft wish to make an announcement, they will provide you with the information they deem necessary.)
 
-The issue was acknowledged on August 22nd and significant back-and-forth occurred with the Security team. The conclusion from the security team was this is not a vulnerability and DLL issues are the responsibility of the individual organizations. No further communication from the team was received. At the time, I 
-
 ## The Response
-
+The issue was acknowledged on August 22nd and significant back-and-forth occurred with the Security team. The conclusion from the security individual was that DLL issues are the responsibility of the individual organizations and no further communication from the team to my follow-ups was received. At the time, I believed they would just provide an announcement to their customers that this was possible and encourage everyone to remove the exe. Because I had not identified an issue like this nor worked with an organization as large as Microsoft, I figured this was how it was done. Then I began pursuing the steps I mentioned in the Intro to this post.
 
 ## The Fix
+The "fix" put in place by Microsoft was to remove the App from online. No announcement was made. No posts saying they were ending support of the App. It just disappearerd. According to sites such as web.archive.org, the 302 redirect begins to appear in March.[<sup>6</sup>](https://web.archive.org/web/20230901000000*/https://portal.azure.com/App/Download) The closest to an announcement I was able to find was that beginning in September/October users were prompted to switch to the Portal Web App instead.[<sup>7</sup>](https://www.reddit.com/r/AZURE/comments/y83yex/azure_portal_uninstaller/) A user on Reddit made a [post](https://www.reddit.com/r/AZURE/comments/12dl3ui/anyone_know_where_the_azure_portal_desktop_app/) in early April asking for the location and noting that no announcements were provided by Microsoft as to its demise.
 
+As of this writing, the vulnerability could not be exploited in the Downloads folder (which is the folder I identified and mentioned originally to Microsoft), but can still be executed in other areas the user has write permissions (e.g., Documents, Desktop).
 
 ## The Lesson Learned
+My biggest takeaway from this experience has been the dangers of being Lawful Good. By reporting the issue responsibly and then remaining silent once the issue was dismissed and then quietly hidden, I allowed organizations around the world to remain at risk to a vulnerability with a nasty history. This is not my first experience with an organization acting this way about a finding. An unnamed company had a repository of thousands of driver's licenses and passports publicly available and, after I reported it, quickly locked it down and ghosted me. Both actions could alienate researchers and lead to dangerous outcomes.
 
+Companies, both large and small, should be mindful of this and ensure they react fairly when these types of findings are provided.
 
-## tl;dr
-The AzurePortalInstaller.exe is vulnerable to DLL Hijacking. The official URL for downloading the app has been removed, but there is no fix for existing downloads. It must be removed from your computers manually and any future downloads of the exe blocked. As of this writing, the vulnerability is still exploitable.
+## The tl;dr
+The AzurePortalInstaller.exe is vulnerable to DLL Hijacking. The official URL for downloading the app has been removed, but there is no fix for existing downloads. It must be removed from your computers manually and any future downloads of the exe blocked. As of this writing, the vulnerability is still exploitable in folders where a user has write permissions excluding the Downloads folder.
 
-## References
+## The References
 1: https://www.jorgebernhardt.com/how-to-install-the-azure-portal-app-for-windows/
 
 2: https://wmatthyssen.com/2020/01/02/download-and-install-the-azure-portal-app-with-powershell/
@@ -50,3 +52,7 @@ The AzurePortalInstaller.exe is vulnerable to DLL Hijacking. The official URL fo
 4: https://www.reviewjournal.com/news/politics-and-government/cyber-attack-may-be-worst-hacking-case-in-the-history-of-america-2223270/
 
 5: https://www.theguardian.com/technology/2020/dec/18/orion-hack-solarwinds-explainer-us-government
+
+6: https://web.archive.org/web/20230901000000*/https://portal.azure.com/App/Download
+
+7: https://www.reddit.com/r/AZURE/comments/y83yex/azure_portal_uninstaller/
