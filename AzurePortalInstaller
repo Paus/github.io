@@ -24,7 +24,9 @@ More importantly, to terminate access to the computer, a user must completely lo
 If the user is already an admin, the basic task can be upgraded to occur at boot instead of at login. However, if the user is not, persistence after locking a device can allow a malicious actor to identify privilege escalation opportunities or perforrm social engineering to convince an admin to active the installer and upgrade their status.
 
 ## The Submission
+On August 20th, 2022, I submitted my finding to Microsoft via the [Microsoft Security Response Center (MSRC)](https://www.microsoft.com/en-us/msrc), who assigned it VULN-072213 with case number 73945. My submission included most of what you read above along with the files required to execute this attack. These files included the dll file that allows the attack to occur and screenshots demonstrating the attack itself. (Please note I have opted not to include those with this post to avoid providing malicious actors with the information they need to execute this attack. Should Microsoft wish to make an announcement, they will provide you with the information they deem necessary.)
 
+The issue was acknowledged on August 22nd and significant back-and-forth occurred with the Security team. The conclusion from the security team was this is not a vulnerability and DLL issues are the responsibility of the individual organizations. No further communication from the team was received. At the time, I 
 
 ## The Response
 
@@ -36,7 +38,7 @@ If the user is already an admin, the basic task can be upgraded to occur at boot
 
 
 ## tl;dr
-The AzurePortalInstaller.exe is vulnerable to DLL Hijacking. The official URL for downloading the app has been removed, but there is no fix for existing downloads. It must be removed from your computers manually and any future downloads of the exe blocked.
+The AzurePortalInstaller.exe is vulnerable to DLL Hijacking. The official URL for downloading the app has been removed, but there is no fix for existing downloads. It must be removed from your computers manually and any future downloads of the exe blocked. As of this writing, the vulnerability is still exploitable.
 
 ## References
 1: https://www.jorgebernhardt.com/how-to-install-the-azure-portal-app-for-windows/
