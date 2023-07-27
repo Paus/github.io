@@ -15,11 +15,13 @@ In August of 2022, I got COVID and was isolated from family and friends. However
 I began thinking about different desktop apps I use that might be vulnerable. Since I couldn't get to sleep, I pulled myself out of bed and sat down at my computer and began testing these different apps. I tested a lot of them with no luck before I was finally able to sleep. The next morning I returned to my computer and started testing again. It was then that I found the Azure Portal Desktop App (AzurePortalInstaller.exe) was vulnerable to DLL. More importantly, I knew there was no way to just push an update to everyone.
 
 ## The Vulnerability
-Because the app is by Microsoft and is "trusted" if you will, the installation process can be started and completed without requiring Admin permissions. Downloads are more likely to be ignored unless, for example, a company uses AWS instead of Azure. The attack also occurs prior to the installation occurring, meaning the app doesn't even have to be installed for it to work. This can make it more difficult for detection software to capture the occurrence of the attack. 
+Because the app is by Microsoft and is "trusted" by default, the installation process can be started and completed without requiring Admin permissions. Downloads are more likely to be ignored unless, for example, a company uses AWS instead of Azure, and can be explained away. The attack also occurs prior to the installation occurring, meaning the app doesn't even have to be installed for it to work. This can make it more difficult for detection software to capture the occurrence of the attack. 
 
 Once access has been established, the attacker needs a way for the shell to reactivate in the event the computer is shutdown. This can be accomplished with the Task Scheduler. A "basic" task that activates when the victim logs in can be created without any elevated privileges. A malicious actor can create a basic task and have it activate the installer every time the user logs in. In my testing, the user never sees the event occur. Nothing pops up and there is no indication to the victim that something unusual has happened.
 
 More importantly, to terminate access to the computer, a user must completely log out of the computer or shut it down. If they Ctrl+Alt+Del and lock it, the access is persistent and the attacker can continue their activities and perform actions the user may have noticed.
+
+If the user is already an admin, the basic task can be upgraded to occur at boot instead of at login. However, if the user is not, persistence after locking a device can allow a malicious actor to identify privilege escalation opportunities or perforrm social engineering to convince an admin to active the installer and upgrade their status.
 
 ## The Submission
 
