@@ -1,13 +1,23 @@
 # The Dangers of Being Lawful Good or: How I Killed the Azure Portal Desktop App and Why Microsoft Never Said a Word
-## Intro
+## The Intro
 Microsoft has been in the news a lot recently, and rightfully so. With various vulnerabilities popping up (some they knew and some they didn't), it's been a rough go for them. With all of that going on, I was reminded of a finding I made last year. At the time, they didn't do anything to address it. Imagine my surprise when after reviewing the last 12 months of Release Notes and Security Bulletins I didn't see any announcements for it either. At the time, I knew it was a serious issue but was told it wasn't and suddenly it disappeared and isn't available to download anymore. Because I was still new in the area, instead of publishing my finding like I am now, I reached out to multiple outlets for help. Either no one responded or said they would look into it and then never said anything again. When I mentioned my frustrations to someone, I was asked why I hadn't published anything on my own. They were understanding of my doubts, but encouraged me to do it anyway. I realized my imposter syndome and my apparent Lawful Good alignment had gotten in the way of me making this issue known. And here we are.
 
 If you are only interested in the vulnerability, please see the tl;dr at the end of this post.
 
 ## The Culprit
-The Azure Portal Desktop App was released by Microsoft in [2019](https://www.jorgebernhardt.com/how-to-install-the-azure-portal-app-for-windows/). The App mainly provided users with a way of accessing the portal without having to use a browser. The App could easily be downloaded directly from the web at [https://portal.azure.com/App/Download](https://portal.azure.com/App/Download) and allowed users "to securely connect (without the use of a browser) to the Azure Port from any kind of Management server, or from a Windows client which has restrictions to use any kind of browser." (https://wmatthyssen.com/2020/01/02/download-and-install-the-azure-portal-app-with-powershell/)
+The Azure Portal Desktop App was released by Microsoft in 2019.[<sup>1</sup>](https://www.jorgebernhardt.com/how-to-install-the-azure-portal-app-for-windows/) The App mainly provided users with a way of accessing the portal without having to use a browser. The exe for the App could easily be downloaded directly from the web at [https://portal.azure.com/App/Download](https://portal.azure.com/App/Download) and allowed users "to securely connect (without the use of a browser) to the Azure Port from any kind of Management server, or from a Windows client which has restrictions to use any kind of browser."[<sup>2</sup>](https://wmatthyssen.com/2020/01/02/download-and-install-the-azure-portal-app-with-powershell/)
 
-## The Issue
+## The Background
+In August of 2022, I got COVID and was isolated from family and friends. However, my home office is in the basement meaning I still had access to my computer. Until then, I had been studying for a cert prior to getting sick. One night when the coughing and fever was keeping me awake, I stared at the ceiling and went over what I'd been learning and thinking about how it could be applied. One of the things that popped in my head was DLL Hijacking.
+
+"DLL Hijacking is a method of injecting malicious code into an application by exploiting the way some Windows applications search and load Dynamic Link Libraries (DLL)."[<sup>3</sup>](https://upguard.com/blog/dll-hijacking) DLL Hijacking was the vulnerability behind the 2020 US Federal Government Data Breach, referred to at the time as the worst cyber attack in US history.[<sup>4</sup>](https://www.reviewjournal.com/news/politics-and-government/cyber-attack-may-be-worst-hacking-case-in-the-history-of-america-2223270/) [<sup>5</sup>](https://www.theguardian.com/technology/2020/dec/18/orion-hack-solarwinds-explainer-us-government) The third party, SolarWinds, announced the vulnerability and provided ways to remediate the issue through a [blog post](https://www.malwarebytes.com/blog/news/2020/12/advanced-cyber-attack-hits-private-and-public-sector-via-supply-chain-software-update) and an [FAQ](https://web.archive.org/web/20201216112302/https://www.solarwinds.com/securityadvisory/faq). Additional Information on this specific instance can be found [here](https://www.newsweek.com/solarwinds-russia-hack-cyberattack-fireeye-software-malware-backdoor-cybersecurity-1554730) and [here](https://www.reviewjournal.com/news/politics-and-government/cyber-attack-may-be-worst-hacking-case-in-the-history-of-america-2223270/).
+
+I began thinking about different desktop apps I use that might be vulnerable. Since I couldn't get to sleep, I pulled myself out of bed and sat down at my computer and began testing these different apps. I tested a lot of them with no luck before I was finally able to sleep. The next morning I returned to my computer and started testing again. It was then that I found the Azure Portal Desktop App (AzurePortalInstaller.exe) was vulnerable to DLL. More importantly, I knew there was no way to just push an update to everyone.
+
+## The Vulnerability
+Because the app is by Microsoft and is "trusted" if you will, the installation process can be started and completed without requiring Admin permissions. The attack also occurs prior to the installation occurring, meaning the app doesn't even have to be installed for it to work.
+
+## The Submission
 
 
 ## The Response
@@ -20,3 +30,14 @@ The Azure Portal Desktop App was released by Microsoft in [2019](https://www.jor
 
 
 tl;dr The AzurePortalInstaller.exe is vulnerable to DLL Hijacking. There is no fix for it and it must be removed from your computers manually and any download of the exe blocked.
+
+## References
+1: https://www.jorgebernhardt.com/how-to-install-the-azure-portal-app-for-windows/
+
+2: https://wmatthyssen.com/2020/01/02/download-and-install-the-azure-portal-app-with-powershell/
+
+3: https://upguard.com/blog/dll-hijacking
+
+4: https://www.reviewjournal.com/news/politics-and-government/cyber-attack-may-be-worst-hacking-case-in-the-history-of-america-2223270/
+
+5: https://www.theguardian.com/technology/2020/dec/18/orion-hack-solarwinds-explainer-us-government
