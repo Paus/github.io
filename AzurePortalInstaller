@@ -21,7 +21,7 @@ Once access has been established, the attacker needs a way for the shell to reac
 
 More importantly, to terminate access to the computer, a user must completely log out of the computer or shut it down. If they Ctrl+Alt+Del and lock it, the access is persistent and the attacker can continue their activities and perform actions the user may have noticed.
 
-If the user is already an admin, the basic task can be upgraded to occur at boot instead of at login. However, if the user is not, persistence after locking a device can allow a malicious actor to identify privilege escalation opportunities or perforrm social engineering to convince an admin to active the installer and upgrade their status.
+If the user is already an admin, the basic task can be upgraded to occur at boot instead of at login. However, if the user is not, persistence after locking a device can allow a malicious actor to identify privilege escalation opportunities or perform social engineering to convince an admin to active the installer and upgrade their status.
 
 ## The Submission
 On August 20th, 2022, I submitted my finding to Microsoft via the [Microsoft Security Response Center (MSRC)](https://www.microsoft.com/en-us/msrc), who assigned it VULN-072213 with case number 73945. My submission included most of what you read above along with the files required to execute this attack. These files included the dll file that allows the attack to occur and screenshots demonstrating the attack itself. (Please note I have opted not to include those with this post to avoid providing malicious actors with the information they need to execute this attack. Should Microsoft wish to make an announcement, they will provide you with the information they deem necessary.)
